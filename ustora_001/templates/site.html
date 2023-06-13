@@ -1,0 +1,54 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+
+        {% block title %}
+            Ustora Demo
+        {% endblock title %}
+
+
+    {% block content %}
+
+        {% block nav %}
+            {% include 'nav.html' %}
+            {% block panel %}
+                <div class="mainmenu-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <div class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="{% url 'ustora_001:products_view' %}">Home</a></li>
+                                    <li><a href="#">Shop page</a></li>
+                                    <li><a href="#">Single product</a></li>
+                                    <li><a href="#">Cart</a></li>
+                                    <li><a href="#">Checkout</a></li>
+                                    <li><a href="#">Category</a></li>
+                                    <li><a href="#">Others</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock panel %}
+        {% endblock nav %}
+
+        {% block main %}
+            {% include 'main.html' %}
+        {% endblock main %}
+
+        {% block footer %}
+            {% include 'footer.html' %}
+        {% endblock footer %}
+
+    {% endblock content %}
+
+

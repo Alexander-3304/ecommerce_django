@@ -1,0 +1,84 @@
+{% extends 'layout/base.html' %}
+
+
+{% block title %}
+{{ order.pk }}
+{% endblock title %}
+
+{% block main %}
+    <section class="wrappage">
+
+        {% if user.is_authenticated %}
+        <div class="container">
+            <h1>Заказ № {{ order.pk }}
+                {% if order.paid %}
+                <span class="badge badge-success">Оплачен</span>
+                {% else %}
+                <span class="badge badge-danger">Не оплачен</span>
+                {% endif %}
+            </h1>
+            <div class="row-fluid justify-content-center">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Изображение</th>
+                            <th>Наименование</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Сумма</th>
+                    </thead>
+
+                    <tbody>
+
+                        {% for item_order in order_items.all %}
+                        <tr>
+                            <td>
+                                {% for item_image in item_order.product.images.all %}
+                                {% if forloop.first %}
+                                <img src="{{ item_image.image.url }}" class="img-reponsive" width="150">
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ item_order.product.name }}
+                            </td>
+                            <td>
+                                {{ item_order.product.price }}
+                            </td>
+                            <td>
+                                {{ item_order.quantity }}
+                            </td>
+                            <td>
+                                {{ item_order.total_price }}
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4">
+                            </td>
+                            <td>
+                                <h4>Итого: {{ order_price }}</h4>
+
+                                {% if not order.paid %}
+                                    <div class="btn-button-group mg-top-30 mg-bottom-15 bt-contact"></div>
+                                    <a class="zoa-btn btn-login hover-white contact"
+                                        href="{% url 'orders:order_qr' order.pk %}">Оплата</a>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <h2> Вам необходимо войти </h2>
+        <div class="btn-button-group mg-top-30 mg-bottom-15 bt-contact"></div>
+        <a class="zoa-btn btn-login hover-white contact" href="{% url 'login' %}">Войти</a>
+        </div>
+        {% endif %}
+
+    </section>
+
+{% endblock main %}

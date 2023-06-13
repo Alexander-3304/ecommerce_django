@@ -1,0 +1,36 @@
+{% load static %}
+
+{% block products %}
+
+        <div class="latest-product">
+            <h2 class="section-title">Products</h2>
+
+            <div class="product-carousel">
+
+                {% for item_item in items %}
+                    <div class="single-product">
+
+                        <div class="product-f-image">
+                            <img src="{{ item_item.image.url }}" alt="">
+                            <div class="product-hover">
+                                <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                <a href="{% url 'ustora_001:items_detail_view' item_item.pk %}" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+                            </div>
+                        </div>
+
+                        <h2><a href="{% url 'ustora_001:items_detail_view' item_item.pk %}">{{ item_item.name }}</a></h2>
+
+                        <div class="product-carousel-price">
+                            <ins>${{ item_item.new_price }}</ins> <del>${{ item_item.old_price }}</del>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+{% endblock products %}
+
+
+

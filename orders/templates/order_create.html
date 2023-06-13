@@ -1,0 +1,243 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+{% block title %}
+{{ category.name }}
+{% endblock title %}
+
+
+
+
+{% block nav %}
+    <!-- Start Nav -->
+
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
+                            <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
+                            <li><a href="{% url 'cart:cart_detail' %}"><i class="fa fa-user"></i> My Cart</a></li>
+                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
+                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-4">
+                    <div class="header-right">
+                        <ul class="list-unstyled list-inline">
+                            <li class="dropdown dropdown-small">
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">currency :</span><span class="value">USD </span><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">USD</a></li>
+                                    <li><a href="#">INR</a></li>
+                                    <li><a href="#">GBP</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown dropdown-small">
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value">English </span><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">German</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="./"><img src="{% static 'img/logo.png' %}"></a></h1>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="shopping-item">
+
+                        {% if cart.get_total_price == 0 %}
+                            <a href="cart.html">Cart - <span class="cart-amunt">$0</span> <i class="fa fa-shopping-cart"></i><span class="product-count">0</span></a>
+                        {% else %}
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                    <a href="cart.html">Cart - <span class="cart-amunt">${{ item.total_price }}</span> <i class="fa fa-shopping-cart"></i><span class="product-count">{{ item.quantity }}</span></a>
+                                {% endwith %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Nav -->
+    {% block panel %}
+        <div class="mainmenu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="{% url 'ustora_001:products_view' %}">Home</a></li>
+                            <li><a href="shop.html">Shop page</a></li>
+                            <li><a href="single-product.html">Single product</a></li>
+                            <li><a href="#">Cart</a></li>
+                            <li class="active"><a href="#">Orders</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                            <li><a href="#">Category</a></li>
+                            <li><a href="#">Others</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock panel %}
+{% endblock nav %}
+
+{% block main %}
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Заказы</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Page title area -->
+
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+
+                            <section class="container">
+                                <div class="row-fluid">
+                                    <div class="col-md-6 col-xl-6">
+                                        <div class="order-info">
+                                            <h3>Ваш заказ</h3>
+                                            {% for item in cart %}
+                                                <table>
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ item.quantity }} x {{ item.product.name }}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><span> <strong>Цена:</strong>{{ item.total_price }}</span></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="2"><strong>Итого:</strong> {{ cart.get_total_price }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-xl-6">
+
+                                        <table>
+                                            <form action="." method="post" class="order-form">
+                                                {{ form.as_table }}
+
+                                                {% csrf_token %}
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <br>
+                                                        <div class="btn-button-group mg-top-30 mg-bottom-15 bt-contact">
+                                                            <button class="zoa-btn btn-login hover-white contact" type="submit" value="Разместить заказ">Разместить заказ</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </form>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+
+
+
+                            <div class="cart-collaterals">
+
+
+                            <div class="cross-sells">
+                                <h2>You may be interested in...</h2>
+                                <ul class="products">
+                                    <li class="product">
+                                        <a href="single-product.html">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="{% static 'img/product-2.jpg' %}">
+                                            <h3>Ship Your Idea</h3>
+                                            <span class="price"><span class="amount">£20.00</span></span>
+                                        </a>
+
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+                                    </li>
+
+                                    <li class="product">
+                                        <a href="single-product.html">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="{% static 'img/product-4.jpg' %}">
+                                            <h3>Ship Your Idea</h3>
+                                            <span class="price"><span class="amount">£20.00</span></span>
+                                        </a>
+
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock main %}

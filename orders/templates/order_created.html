@@ -1,0 +1,13 @@
+{% extends 'layout/base.html' %}
+
+
+{% block title %}
+    {{ category.name }}
+{% endblock title %}
+    
+{% block main %}
+<h1>Спасибо</h1>
+<p class="dark">Ваш заказ был успешно оформлен. Мы свяжемся с вами в ближайшее время.</p>
+<p class="dark">Номер Вашего заказа </p>
+    <strong  class="dark">{{ order.id }}</strong>.  
+{% endblock main %}

@@ -1,0 +1,46 @@
+{% extends "layout/base.html" %} 
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center;">
+  <div data-wow-delay="0.1s">
+      <p style="text-align: center; font-size: 32px; font-weight: bold;">Авторизация</p>
+      {% if form.errors %}
+      <p style="text-align: center; color: #FF0000;">Comment: Логин или пароль не верны, попроуйте заново</p>
+      {% endif %} {% if next %} {% if user.is_authenticated %}
+      <p style="text-align: center; color: #FF0000;">
+        Comment: Вам не разрешено просматривать данную страницу. Для простмотра страницы,
+        зарегистрируюйтесь.
+      </p>
+      {% else %}
+      <p style="font-size: 18px; color: #FF0000;">Пожалуйста войдите, чтобы просмотреть содержимое страницы.</p>
+      {% endif %} {% endif %}
+
+      <form method="post" action="{% url 'login' %}" style="display: flex; justify-content: center; align-items: center;">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+          </tr>
+
+          <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+            <td><input class="btn btn-secondary" type="submit" value="Вход" /></td>
+            <td><input type="hidden" name="next" value="{{ next }}" /></td>
+          </tr>
+
+          <tr>
+            <td></td>
+            {# Assumes you setup the password_reset view in your URLconf #}
+            <td><a href="{% url 'password_reset' %}">Забыли пароль?</a></td>
+          </tr>
+
+        </table>
+
+
+      </form>
+
+
+    </div>
+</div>
+{% endblock %}
